@@ -283,8 +283,6 @@ public class ExampleUnitTest {
             }
         });
 
-        //у него есть onSuccess onError onComplete
-
     }
 
 
