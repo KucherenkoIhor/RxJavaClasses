@@ -117,7 +117,8 @@ public class ExampleUnitTest {
     @Test
     public void sampleObservable() throws Exception {
 
-        Observable.range(0, 1_000_000)
+        Observable
+                .range(0, 1_000_000)
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
@@ -135,7 +136,9 @@ public class ExampleUnitTest {
      */
     @Test
     public void sampleFlowable() throws Exception {
-        Flowable.range(0, 1_000_000)
+
+        Flowable
+                .range(0, 1_000_000)
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
