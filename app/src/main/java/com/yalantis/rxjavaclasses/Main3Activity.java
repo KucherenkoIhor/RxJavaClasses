@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.subjects.BehaviorSubject;
@@ -112,7 +114,7 @@ public class Main3Activity extends AppCompatActivity {
 
 
         ConnectableObservable<Integer> connectableObservable = Observable.range(0, 1_000_000)
-                .delay(1, TimeUnit.SECONDS)
+                //.delay(1, TimeUnit.SECONDS)
                 .publish();
 
         connectableObservable.subscribe(new Consumer<Integer>() {
@@ -132,8 +134,54 @@ public class Main3Activity extends AppCompatActivity {
         connectableObservable.connect();
 
         connectableObservable.autoConnect();
+//
+//        connectableObservable.autoConnect(4);
 
-        connectableObservable.autoConnect(4);
+        ///////////////////////
+
+
+        Observable first = Observable.fromPublisher(new Publisher<String>() {
+            @Override
+            public void subscribe(Subscriber<? super String> s) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                s.onNext("ffffff");
+            }
+        });
+
+        Observable second = Observable.fromPublisher(new Publisher<String>() {
+            @Override
+            public void subscribe(Subscriber<? super String> s) {
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                s.onNext("fddddff");
+            }
+        });
+
+        Observable<Boolean> combined = Observable.combineLatest(first, second, new BiFunction<String, String, Boolean>() {
+
+            @Override
+            public Boolean apply(@NonNull String s, @NonNull String s2) throws Exception {
+                return s == s2;
+            }
+
+        });
+
+        combined.subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+
+            }
+        });
+
+
+
 
 
 
