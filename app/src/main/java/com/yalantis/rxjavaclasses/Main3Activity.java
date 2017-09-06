@@ -3,6 +3,7 @@ package com.yalantis.rxjavaclasses;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
@@ -103,6 +105,42 @@ public class Main3Activity extends AppCompatActivity {
 
             }
         }, 3000);
+
+
+        ///////////////////////
+
+
+
+        ConnectableObservable<Integer> connectableObservable = Observable.range(0, 1_000_000)
+                .delay(1, TimeUnit.SECONDS)
+                .publish();
+
+        connectableObservable.subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.d("TAGGGG", String.valueOf(integer));
+            }
+        });
+
+        connectableObservable.subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.d("TAGGGG", String.valueOf(integer));
+            }
+        });
+
+        connectableObservable.connect();
+
+        connectableObservable.autoConnect();
+
+        connectableObservable.autoConnect(4);
+
+
+
+
+
+
+
 
 
     }
