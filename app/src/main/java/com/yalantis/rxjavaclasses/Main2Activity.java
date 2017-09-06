@@ -16,17 +16,18 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-
         Flowable<Long> longFlowable = Flowable.rangeLong(0, 1_000_000);
 
-        longFlowable.subscribe(new Consumer<Long>() {
+        longFlowable
+                .subscribe(new Consumer<Long>() {
             @Override
             public void accept(Long aLong) throws Exception {
                 Log.d(MainActivity.class.getSimpleName(), String.valueOf(aLong));
             }
         });
 
-        longFlowable.subscribe(new Consumer<Long>() {
+        longFlowable
+                .subscribe(new Consumer<Long>() {
             @Override
             public void accept(Long aLong) throws Exception {
                 Log.d(MainActivity.class.getSimpleName(), String.valueOf(aLong));
@@ -50,6 +51,8 @@ public class Main2Activity extends AppCompatActivity {
                 Log.d(MainActivity.class.getSimpleName(), s);
             }
         });
+
+        stringFlowable.take(1).blockingFirst();
 
         // !!! КАЖДЫЙ ОПЕРАТОР RX ВОЗВРАЩАЕТ НОВЫЙ ИНСТАНС Flowable
 

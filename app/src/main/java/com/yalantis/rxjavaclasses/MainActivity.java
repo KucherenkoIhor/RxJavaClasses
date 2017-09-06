@@ -30,16 +30,14 @@ public class MainActivity extends AppCompatActivity {
         проверить непрекратился ли еще Flowable
         boolean isDisposed();
     }
+    */
 
-
-     */
     private Disposable mDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         mDisposable = Flowable.fromPublisher(new Publisher<Integer>() {
 
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         })
+
                 .retry()//если произойдет ошибка, то сабскрайбер переподпишется на новый обсервейбл
                 .doOnNext(new Consumer<Integer>() {
                     @Override
